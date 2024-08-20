@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import './header.css';
 import bannerimg from '../../images/restauranfood.jpg';
+import BookingForm from './BookingForm';
 
 function Header() {
   const [showForm, setShowForm] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
+  const [availableTimes, setAvailableTimes] = useState([
+    '18:00', '19:00', '20:00', '21:00'
+  ]);
   const handleReserveClick = () => {
     setShowForm(!showForm);
   };
@@ -21,7 +25,7 @@ function Header() {
   }
   return (
     <header className="header">
-      <section className={`banner-section ${showForm ? 'flipped' : ''}`}>
+      <section className={`banner-section `}>
         <div className="banner">
           <h2>Little Lemon</h2>
           <h3>Chicago</h3>
@@ -36,28 +40,10 @@ function Header() {
         </div>
 
         <div className='limit'>
-          {showForm ? <div className="reservation-form">
-            <h2>Reservation Form</h2>
-            <form onSubmit={handleFormSubmit}>
-              <label>
-                Name:
-                <input type="text" name="name" required />
-              </label>
-              <label>
-                Date:
-                <input type="date" name="date" required />
-              </label>
-              <label>
-                Time:
-                <input type="time" name="time" required />
-              </label>
-              <label>
-                Guests:
-                <input type="number" name="guests" required />
-              </label>
-              <button type="submit">Submit</button>
-            </form>
-          </div> : <div className="banner-img">
+          {showForm ? <BookingForm 
+              onSubmit={handleFormSubmit} 
+              availableTimes={availableTimes} 
+            />: <div className="banner-img">
             <img src={bannerimg} alt="banner" />
           </div>}
         </div>
